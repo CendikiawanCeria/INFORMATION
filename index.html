@@ -20,6 +20,10 @@
     .line-clamp-prompt{display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden;white-space:pre-wrap}
     .social-btn{transition:transform .18s ease,filter .18s ease}.social-btn:hover{transform:translateY(-2px);filter:brightness(1.04)}
     .modal-backdrop{background:rgba(15,23,42,.62);backdrop-filter:blur(5px)}
+    .admin-only{display:none!important}
+    body.admin-mode .admin-only{display:initial!important}
+    body.admin-mode .admin-only.flex{display:flex!important}
+    body.admin-mode .admin-only.inline-flex{display:inline-flex!important}
     .toast{animation:toastIn .22s ease-out}@keyframes toastIn{from{opacity:0;transform:translate(-50%,12px)}to{opacity:1;transform:translate(-50%,0)}}
     .category-chip{white-space:nowrap}.video-frame{aspect-ratio:16/9}
     button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid #f5b800;outline-offset:2px}
@@ -41,7 +45,9 @@
           <a class="social-btn rounded-xl px-3 py-2 text-sm font-bold text-slate-600 hover:bg-slate-100" href="https://www.tiktok.com/@cendikiawan.ceria" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-tiktok mr-1"></i>TikTok</a>
           <a class="social-btn rounded-xl px-3 py-2 text-sm font-bold text-slate-600 hover:bg-slate-100" href="https://www.instagram.com/cendikiawan.ceria?psln=M2NmOXY0cTZjbHhp" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram mr-1 text-pink-600"></i>Instagram</a>
         </nav>
-        <button id="openModalTop" class="rounded-xl bg-blue-700 px-3 py-2.5 text-sm font-extrabold text-white shadow-md shadow-blue-900/15 transition hover:bg-blue-800 sm:px-5 sm:text-base"><i class="fa-solid fa-plus mr-1"></i><span class="hidden sm:inline">Tambah Video &amp; Prompt</span><span class="sm:hidden">Tambah</span></button>
+        <button id="adminLoginBtn" type="button" class="rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm font-extrabold text-slate-700 transition hover:bg-slate-50"><i class="fa-solid fa-lock mr-1"></i><span id="adminLoginLabel">Login Admin</span></button>
+        <button id="adminLogoutBtn" type="button" class="hidden rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm font-extrabold text-slate-700 transition hover:bg-slate-50">Keluar Admin</button>
+        <button id="openModalTop" class="admin-only hidden rounded-xl bg-blue-700 px-3 py-2.5 text-sm font-extrabold text-white shadow-md shadow-blue-900/15 transition hover:bg-blue-800 sm:px-5 sm:text-base"><i class="fa-solid fa-plus mr-1"></i><span class="hidden sm:inline">Tambah Video &amp; Prompt</span><span class="sm:hidden">Tambah</span></button>
       </div>
     </div>
   </header>
@@ -53,9 +59,9 @@
       <div class="relative mx-auto max-w-7xl px-5 py-14 text-center sm:px-8 sm:py-20 lg:py-24">
         <span class="inline-flex items-center gap-2 rounded-full border border-yellow-200/30 bg-yellow-300/15 px-4 py-2 text-xs font-extrabold tracking-wide text-yellow-300 sm:text-sm"><i class="fa-solid fa-wand-magic-sparkles"></i> PUSAT INSPIRASI PROMPT &amp; KONTEN AI</span>
         <h1 class="mx-auto mt-6 max-w-4xl text-4xl font-black leading-[1.12] tracking-tight sm:text-5xl lg:text-6xl">Galeri Video &amp; <span class="text-yellow-300">Prompt AI</span> Cendikiawan Ceria</h1>
-        <p class="mx-auto mt-5 max-w-2xl text-base leading-7 text-blue-50/90 sm:text-lg sm:leading-8">Temukan inspirasi prompt AI, video edukasi anak, video AI, dan clipper. Jelajahi ide kreatif, salin prompt, lalu kembangkan karya Anda berikutnya.</p>
+        <p class="mx-auto mt-5 max-w-2xl text-base leading-7 text-blue-50/90 sm:text-lg sm:leading-8">Temukan inspirasi prompt AI, video edukasi anak, video AI, dan clipper. Jelajahi ide kreatif dan salin prompt secara gratis tanpa perlu login.</p>
         <div class="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-          <button id="openModalHero" class="social-btn rounded-2xl bg-yellow-400 px-6 py-3.5 font-black text-blue-950 shadow-lg shadow-black/15 hover:bg-yellow-300"><i class="fa-solid fa-plus mr-2"></i>Tambah Konten Baru</button>
+          <button id="openModalHero" class="admin-only hidden social-btn rounded-2xl bg-yellow-400 px-6 py-3.5 font-black text-blue-950 shadow-lg shadow-black/15 hover:bg-yellow-300"><i class="fa-solid fa-plus mr-2"></i>Tambah Konten Baru</button>
           <a class="social-btn rounded-2xl border border-white/25 bg-white/10 px-6 py-3.5 font-extrabold text-white hover:bg-white/15" href="https://youtube.com/@cendikiawanceria3608?si=e0s2fkumkksf9S4h" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-youtube mr-2"></i>Kunjungi YouTube</a>
         </div>
         <div class="mt-9 flex flex-wrap items-center justify-center gap-3">
@@ -92,7 +98,7 @@
         <span class="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-blue-50 text-2xl text-blue-700"><i class="fa-solid fa-folder-open"></i></span>
         <h2 class="mt-4 text-xl font-black">Konten tidak ditemukan</h2>
         <p class="mt-2 text-slate-500">Coba kata kunci lain atau tambahkan video dan prompt baru.</p>
-        <button id="emptyAddBtn" class="mt-5 rounded-xl bg-blue-700 px-5 py-3 font-extrabold text-white hover:bg-blue-800">Tambah konten</button>
+        <button id="emptyAddBtn" class="admin-only hidden mt-5 rounded-xl bg-blue-700 px-5 py-3 font-extrabold text-white hover:bg-blue-800">Tambah konten</button>
       </div>
     </section>
   </main>
@@ -206,10 +212,13 @@
             <h2 class="text-xl font-black leading-snug text-slate-800">${escapeHTML(item.title)}</h2>
             ${item.description?`<p class="mt-2 text-sm leading-6 text-slate-500">${escapeHTML(item.description)}</p>`:''}
             <div class="prompt-box mt-5 overflow-hidden rounded-2xl border border-slate-800">
-              <div class="flex items-center justify-between gap-2 border-b border-white/10 px-4 py-3"><span class="text-xs font-black tracking-wide text-yellow-300"><i class="fa-solid fa-code mr-1.5"></i>TEKS PROMPT AI</span><button data-copy="${escapeHTML(item.id)}" class="shrink-0 rounded-lg bg-blue-700 px-3 py-2 text-xs font-extrabold text-white transition hover:bg-blue-600"><i class="fa-regular fa-copy mr-1"></i>Salin Prompt</button></div>
+              <div class="flex items-center justify-between gap-2 border-b border-white/10 px-4 py-3"><span class="text-xs font-black tracking-wide text-yellow-300"><i class="fa-solid fa-code mr-1.5"></i>TEKS PROMPT AI <span class="ml-1 font-semibold text-slate-300">· bebas disalin</span></span><button data-copy="${escapeHTML(item.id)}" class="shrink-0 rounded-lg bg-blue-700 px-3 py-2 text-xs font-extrabold text-white transition hover:bg-blue-600"><i class="fa-regular fa-copy mr-1"></i>Salin Prompt</button></div>
               <div class="px-4 py-4"><p id="prompt-${escapeHTML(item.id)}" class="whitespace-pre-wrap break-words text-sm leading-6 ${promptLong?'line-clamp-prompt':''}">${prompt || '<span class="text-slate-400">Belum ada teks prompt.</span>'}</p>${promptLong?`<button data-expand="${escapeHTML(item.id)}" class="mt-3 text-xs font-extrabold text-yellow-300 hover:text-yellow-200">Lihat selengkapnya <i class="fa-solid fa-chevron-down ml-1"></i></button>`:''}</div>
             </div>
-            <div class="mt-auto pt-5"><a class="flex items-center justify-center gap-2 rounded-xl bg-red-50 px-4 py-3 text-sm font-black text-red-600 transition hover:bg-red-100" href="${escapeHTML(youtubeUrl(item))}" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-youtube text-lg"></i>Buka di YouTube <i class="fa-solid fa-arrow-up-right-from-square ml-auto text-xs"></i></a></div>
+            <div class="mt-auto space-y-2 pt-5">
+              <a class="flex items-center justify-center gap-2 rounded-xl bg-red-50 px-4 py-3 text-sm font-black text-red-600 transition hover:bg-red-100" href="${escapeHTML(youtubeUrl(item))}" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-youtube text-lg"></i>Buka di YouTube <i class="fa-solid fa-arrow-up-right-from-square ml-auto text-xs"></i></a>
+              <button type="button" data-delete="${escapeHTML(item.id)}" class="admin-only hidden w-full items-center justify-center gap-2 rounded-xl border border-red-200 bg-white px-4 py-3 text-sm font-extrabold text-red-700 transition hover:bg-red-50"><i class="fa-solid fa-trash-can"></i> Hapus Video &amp; Prompt</button>
+            </div>
           </div>
         </article>`;
       }).join('');
@@ -229,6 +238,28 @@
         showToast('Prompt berhasil disalin!');
       }catch(e){showToast('Gagal menyalin. Coba salin teks secara manual.');}
     }
+    // Pengunjung dapat menyalin prompt tanpa login. Login hanya untuk pengelolaan konten admin.
+    // LOGIN ADMIN SEDERHANA: ganti kode di bawah sebelum mengunggah ulang.
+    // Catatan: kode di HTML/JavaScript dapat dilihat pengunjung yang paham sumber halaman.
+    // Ini hanya menyembunyikan tombol edit, bukan pengamanan server yang kuat.
+    const ADMIN_CODE = 'AdminCC.2026';
+    const adminLoginBtn=document.getElementById('adminLoginBtn');
+    const adminLogoutBtn=document.getElementById('adminLogoutBtn');
+    function setAdminMode(enabled){
+      document.body.classList.toggle('admin-mode',enabled);
+      adminLogoutBtn.classList.toggle('hidden',!enabled);
+      adminLoginBtn.classList.toggle('hidden',enabled);
+      if(enabled) showToast('Mode administrator aktif.');
+    }
+    adminLoginBtn.addEventListener('click',()=>{
+      const entered=prompt('Masukkan kode login administrator:');
+      if(entered===null)return;
+      if(entered===ADMIN_CODE){setAdminMode(true);}
+      else {showToast('Kode login salah.');}
+    });
+    adminLogoutBtn.addEventListener('click',()=>setAdminMode(false));
+    setAdminMode(false);
+
     const modal=document.getElementById('contentModal');
     function openModal(){modal.classList.remove('hidden');modal.classList.add('flex');document.body.style.overflow='hidden';setTimeout(()=>document.getElementById('videoTitle').focus(),60);}
     function closeModal(){modal.classList.add('hidden');modal.classList.remove('flex');document.body.style.overflow='';}
@@ -248,6 +279,15 @@
     });
     document.getElementById('contentGrid').addEventListener('click',e=>{
       const copy=e.target.closest('[data-copy]');if(copy){copyPrompt(copy.dataset.copy);return;}
+      const remove=e.target.closest('[data-delete]');
+      if(remove){
+        if(!document.body.classList.contains('admin-mode')){showToast('Login administrator diperlukan.');return;}
+        const item=content.find(x=>String(x.id)===String(remove.dataset.delete));
+        if(!item)return;
+        if(!confirm(`Hapus “${item.title}” beserta video dan prompt-nya? Tindakan ini tidak dapat dibatalkan.`))return;
+        content=content.filter(x=>String(x.id)!==String(remove.dataset.delete));
+        persistContent();render();showToast('Video dan prompt berhasil dihapus.');return;
+      }
       const expand=e.target.closest('[data-expand]');if(expand){
         const p=document.getElementById(`prompt-${expand.dataset.expand}`);const collapsed=p.classList.toggle('line-clamp-prompt');
         expand.innerHTML=collapsed?'Lihat selengkapnya <i class="fa-solid fa-chevron-down ml-1"></i>':'Tampilkan lebih sedikit <i class="fa-solid fa-chevron-up ml-1"></i>';
